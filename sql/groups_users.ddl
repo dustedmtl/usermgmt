@@ -1,12 +1,12 @@
 -- Table for storing groups
-CREATE TABLE groups (
+CREATE TABLE IF NOT EXISTS groups (
     group_id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Unique identifier for the group
     group_name TEXT NOT NULL UNIQUE,             -- Group name, must be unique
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Timestamp when the group was created
 );
 
 -- Table for storing users
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,   -- Unique identifier for the user
     username TEXT NOT NULL UNIQUE,               -- Username, must be unique
     email TEXT NOT NULL UNIQUE,                  -- User email, must be unique
@@ -14,7 +14,7 @@ CREATE TABLE users (
 );
 
 -- Table for storing group memberships (many-to-many relationship)
-CREATE TABLE group_memberships (
+CREATE TABLE IF NOT EXISTS group_memberships (
     membership_id INTEGER PRIMARY KEY AUTOINCREMENT, -- Unique identifier for the membership
     group_id INTEGER NOT NULL,                       -- Foreign key referring to the groups table
     user_id INTEGER NOT NULL,                        -- Foreign key referring to the users table
