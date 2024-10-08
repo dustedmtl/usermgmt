@@ -1,0 +1,12 @@
+fastapi
+pydantic
+uvicorn
+
+# linting
+mypy
+flake8
+pyproject-flake8
+
+# testing
+pytest
+httpx

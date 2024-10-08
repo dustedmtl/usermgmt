@@ -1,0 +1,14 @@
+# env vars
+.env
+
+# linked data from the os
+data
+
+# caches
+__pycache__
+
+# virtualenv
+venv
+
+# logs
+*.log

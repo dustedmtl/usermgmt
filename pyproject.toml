@@ -1,0 +1,12 @@
+[tool.flake8]
+max-line-length = 120  # Set maximum line length (default is 79)
+extend-ignore = ["E203", "W503"]  # Ignore specific rules (PEP 8 compatibility)
+exclude = ["venv/*"]  # Exclude the virtual environment folder
+
+[tool.mypy]
+files = "."  # Specify the files to check (current directory)
+ignore_missing_imports = true  # Ignore missing imports to avoid false errors
+disallow_untyped_calls = true  # Disallow calling functions without type annotations
+disallow_untyped_defs = true  # Disallow defining functions without type annotations
+warn_return_any = true  # Warn when returning Any type
+strict_optional = true  # Enable strict optional checks
