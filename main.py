@@ -13,7 +13,6 @@ conn = None
 async def lifespan(app: FastAPI):
     logger.warning('Starting up')
     conn = get_db()
-    init_db(conn)  # Initialize schema on startup
     yield
     conn.close()
 
@@ -109,7 +108,7 @@ class MembershipCreate(BaseModel):
 
 
 @app.post("/v1/users/", response_model=dict)
-def add_user(user: UserCreate, conn: sqlite3.Connection = Depends(get_db_dependency)):
+def add_user(user: UserCreate):
     cursor = conn.cursor()
     try:
         cursor.execute("INSERT INTO users (username, email) VALUES (?, ?)", (user.username, user.email))
@@ -122,7 +121,7 @@ def add_user(user: UserCreate, conn: sqlite3.Connection = Depends(get_db_depende
 
 
 @app.put("/v1/users/{user_id}", response_model=dict)
-def update_user(user_id: int, user: UserUpdate, conn: sqlite3.Connection = Depends(get_db_dependency)):
+def update_user(user_id: int, user: UserUpdate):
     cursor = conn.cursor()
 
     updates = []
@@ -153,7 +152,7 @@ def update_user(user_id: int, user: UserUpdate, conn: sqlite3.Connection = Depen
 
 
 @app.delete("/v1/users/{user_id}", response_model=dict)
-def delete_user(user_id: int, conn: sqlite3.Connection = Depends(get_db_dependency)):
+def delete_user(user_id: int):
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM users WHERE user_id = ?", (user_id,))
@@ -169,7 +168,7 @@ def delete_user(user_id: int, conn: sqlite3.Connection = Depends(get_db_dependen
 
 
 @app.post("/v1/groups/", response_model=dict)
-def add_group(group: GroupCreate, conn: sqlite3.Connection = Depends(get_db_dependency)):
+def add_group(group: GroupCreate):
     cursor = conn.cursor()
     try:
         cursor.execute("INSERT INTO groups (group_name) VALUES (?)", (group.group_name,))
@@ -182,7 +181,7 @@ def add_group(group: GroupCreate, conn: sqlite3.Connection = Depends(get_db_depe
 
 
 @app.put("/v1/groups/{group_id}", response_model=dict)
-def update_group(group_id: int, group: GroupUpdate, conn: sqlite3.Connection = Depends(get_db_dependency)):
+def update_group(group_id: int, group: GroupUpdate):
     cursor = conn.cursor()
 
     updates = []
@@ -209,7 +208,7 @@ def update_group(group_id: int, group: GroupUpdate, conn: sqlite3.Connection = D
 
 
 @app.delete("/v1/groups/{group_id}", response_model=dict)
-def delete_group(group_id: int, conn: sqlite3.Connection = Depends(get_db_dependency)):
+def delete_group(group_id: int):
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM groups WHERE group_id = ?", (group_id,))
@@ -225,8 +224,7 @@ def delete_group(group_id: int, conn: sqlite3.Connection = Depends(get_db_depend
 
 
 @app.post("/v1/groups/{group_id}/memberships/", response_model=dict)
-def add_user_to_group(group_id: int, membership: MembershipCreate,
-                      conn: sqlite3.Connection = Depends(get_db_dependency)):
+def add_user_to_group(group_id: int, membership: MembershipCreate):
     cursor = conn.cursor()
 
     try:
@@ -241,7 +239,7 @@ def add_user_to_group(group_id: int, membership: MembershipCreate,
 
 
 @app.delete("/v1/groups/{group_id}/memberships/{user_id}", response_model=dict)
-def remove_user_from_group(group_id: int, user_id: int, conn: sqlite3.Connection = Depends(get_db_dependency)):
+def remove_user_from_group(group_id: int, user_id: int):
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM group_memberships WHERE group_id = ? AND user_id = ?", (group_id, user_id))

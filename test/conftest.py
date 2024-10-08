@@ -40,6 +40,7 @@ def client(test_db):
         return test_db
 
     app.dependency_overrides[get_db] = override_get_db
+    conn = get_db()
     yield TestClient(app)  # Provide the FastAPI TestClient instance
 
     # Cleanup dependency overrides
