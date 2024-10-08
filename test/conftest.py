@@ -24,16 +24,12 @@ def test_db():
         sqldata = sqlfile.read()
         cursor.executescript(sqldata)
 
-    # Create tables
-    # cursor.execute("CREATE TABLE users (user_id INTEGER PRIMARY KEY, username TEXT UNIQUE, email TEXT UNIQUE)")
-    # cursor.execute("CREATE TABLE groups (group_id INTEGER PRIMARY KEY, group_name TEXT UNIQUE)")
-    # cursor.execute("CREATE TABLE group_memberships (group_id INTEGER, user_id INTEGER, role TEXT, PRIMARY KEY (group_id, user_id))")
-    
     conn.commit()
     
     yield conn  # This will be the test database during the tests
     
     conn.close()  # Close the connection after tests
+
 
 @pytest.fixture
 def client(test_db):
