@@ -67,4 +67,13 @@ pflake8
 mypy
 ```
 
+## Issues
+
+- The database dependency injection when running tests doesn't work.
+
+## TODO
+
+- Return id information when creating a user or group.
+
+
 
