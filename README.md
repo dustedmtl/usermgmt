@@ -14,8 +14,8 @@ This FastAPI application provides an API for managing users, groups, and group m
 1. **Clone the Repository**:
 
 ```
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/dustedmtl/usermgmt.git
+cd usermgmt
 ```
 
 2. **Create a virtual environment**
